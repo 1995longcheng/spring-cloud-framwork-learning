@@ -1,0 +1,17 @@
+server:
+  port: 10001
+  
+logging:
+  file: logs/${spring.application.name}.log
+  level:
+    org.springframework: DEBUG
+    com.learning: INFO
+
+spring:      
+  application:
+    name: learning-spring-cloud-microservice-comsumer
+  
+learning-spring-cloud-microservice-provider:
+  ribbon:
+    listOfServers: localhost:9001,localhost:9002
+  

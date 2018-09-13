@@ -1,0 +1,40 @@
+server:
+  port: 9001
+  
+logging:
+  file: logs/${spring.application.name}.log
+  level:
+    org.springframework: DEBUG  
+
+spring:
+  datasource:
+    druid:
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/xiongchaoqun
+      username: root
+      password: x5
+    
+#      driver: com.mysql.jdbc.Driver
+#      url: jdbc:mysql://172.168.10.8:3306/xiongchaoqun2
+#      username: develop
+#      password: develop
+        
+  application:
+    name: learning-spring-cloud-microservice-provider
+
+eureka:
+  client:
+    register-with-eureka: true
+    healthcheck: 
+      enable: true # 对应的类名：EurekaDiscoveryClientConfiguration.class
+    serviceUrl:
+      defaultZone: http://admin:admin@node1:3001/eureka
+  instance:
+    appname: ${spring.application.name}
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}
+    lease-expiration-duration-in-seconds: 30
+    lease-renewal-interval-in-seconds: 10
+  
+  
+  

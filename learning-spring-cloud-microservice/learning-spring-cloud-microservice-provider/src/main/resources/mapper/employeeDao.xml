@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 相当于注解@Repository -->
+<mapper namespace="com.learning.repository.EmployeeDao">
+	<select id="getEmployee" parameterType="String" resultType="com.learning.entity.Employee">
+		select * from employee where employee_id = #{employee_id}
+	</select>
+	
+	<select id="getProject" parameterType="String" resultMap="project">
+		select t1.project_id,t1.project_name,t1.company_name,t1.project_start_time,
+			t2.employee_id,t2.employee_name,t2.employee_sex,t2.employee_age,t2.employee_birth
+		from project t1
+		left join employee t2 on t1.project_id = t2.project_id
+		where t1.project_id = #{project_id}
+	</select>
+	
+	<resultMap type="com.learning.entity.Project" id="project">
+		<id property="project_id" column="project_id" javaType="java.lang.Long"></id>
+		<result property="project_name" column="project_name" javaType="java.lang.String"/>
+		<result property="company_name" column="company_name" javaType="java.lang.String"/>
+		<result property="project_start_time" column="project_start_time" javaType="java.util.Date"/>
+		
+		<collection property="project_employees" ofType="com.learning.entity.Employee">
+			<id property="employee_id" column="employee_id" javaType="java.lang.Long"></id>
+			<result property="employee_name" column="employee_name" javaType="java.lang.String"/>
+			<result property="employee_sex" column="employee_sex" javaType="java.lang.String"/>
+			<result property="employee_age" column="employee_age" javaType="java.lang.Integer"/>
+			<result property="employee_birth" column="employee_birth" javaType="java.util.Date"/>	
+			<result property="project_id" column="project_id" javaType="java.lang.Long"/>	
+		</collection>
+	</resultMap>
+	
+	<insert id="insertEmployee" parameterType="com.learning.entity.Employee">
+		insert into employee(employee_name,employee_sex,employee_id,employee_age,employee_birth,project_id) 
+			values(#{employee_name},#{employee_sex},#{employee_id},#{employee_age},#{employee_birth},#{project_id})
+	</insert>
+	
+	<insert id="insertProject" parameterType="com.learning.entity.Project">
+		insert into project(project_id,project_name,company_name,project_start_time) 
+			values(#{project_id},#{project_name},#{company_name},#{project_start_time})
+	</insert>
+	
+	<!-- 批量插入 
+	<insert id="insertEmployees" parameterType="list">
+		insert into employee(employee_name,employee_sex,employee_id,employee_age,employee_birth,project_id)
+			values
+		<foreach collection="employees" item="employee" separator="," index="index"></foreach>
+			(#{employee.employee_name},#{employee.employee_sex},#{employee.employee_id},#{employee.employee_age},#{employee.employee_birth},#{employee.project_id})
+	</insert>
+	-->
+</mapper>

@@ -1,0 +1,17 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: learning-spring-cloud-microservice-provider
+
+eureka:
+  client:
+    register-with-eureka: true
+    service-url: 
+      defaultZone: http://node1:8001/eureka
+    
+#阿里连接池
+druid: 
+  username: 
+  
+  

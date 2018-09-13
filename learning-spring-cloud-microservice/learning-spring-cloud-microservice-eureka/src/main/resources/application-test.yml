@@ -1,0 +1,23 @@
+server:
+  port: 3001
+
+logging:
+  file: logs/${spring.application.name}.log
+  level:
+    org.springframework: INFO
+
+spring:
+  security:
+    user:
+      name: admin
+      password: admin
+  application:
+    name: microservice-eureka-ha #构建eureka服务端集群时，需要保持一致
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin@node2:3002/eureka/
+  instance:
+    hostname: node1
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.learning</groupId>
+	<artifactId>learning-spring-cloud-microservice</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>learning-spring-cloud-microservice-parent</name>
+	<description>the spring-cloud learning work</description>
+
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.0.RELEASE</version>
+	</parent>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Finchley.M9</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<modules>
+		<module>learning-spring-cloud-microservice-eureka</module>
+		<module>learning-spring-cloud-microservice-eureka-ha</module>
+		<module>learning-spring-cloud-microservice-provider</module>
+		<module>learning-spring-cloud-microservice-provider-simple</module>
+		<module>learning-spring-cloud-microservice-consumer-simple-feign-hystrix</module>
+		<module>learning-spring-cloud-microservice-provider-swagger</module>
+		<module>learning-spring-cloud-microservice-consumer</module>
+		<module>learning-spring-cloud-microservice-common</module>
+		<module>learning-spring-cloud-microservice-consumer-feign</module>
+		<module>learning-spring-cloud-microservice-consumer-simple-feign</module>
+		<module>learning-spring-cloud-microservice-consumer-ribbon-with-eureka</module>
+		<module>learning-spring-cloud-microservice-consumer-ribbon-without-eureka</module>
+   		<module>learning-spring-cloud-microservice-hystrix-dashboard</module>
+  </modules>
+</project>

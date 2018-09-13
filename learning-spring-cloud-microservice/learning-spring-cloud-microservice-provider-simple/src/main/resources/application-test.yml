@@ -1,0 +1,28 @@
+server:
+  port: 9001
+  
+logging:
+  file: logs/${spring.application.name}.log
+  level:
+    org.springframework: DEBUG 
+
+spring:
+  application:
+    name: learning-spring-cloud-microservice-provider-simple
+
+eureka:
+  client:
+    register-with-eureka: true
+    healthcheck: 
+      enable: true # 对应的类名：EurekaDiscoveryClientConfiguration.class
+    serviceUrl:
+      defaultZone: http://admin:admin@node1:3001/eureka
+  instance:
+    appname: ${spring.application.name}
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}
+    lease-expiration-duration-in-seconds: 30
+    lease-renewal-interval-in-seconds: 10
+  
+  
+  

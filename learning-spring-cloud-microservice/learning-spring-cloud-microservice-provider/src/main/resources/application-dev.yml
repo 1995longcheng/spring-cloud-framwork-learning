@@ -1,0 +1,42 @@
+server:
+  port: 9001
+  
+logging:
+  file: logs/${spring.application.name}.log
+  level:
+    org.springframework: DEBUG  
+    org.mybatis: DEBUG
+    com.learning: DEBUG
+
+spring:
+  application:
+    name: learning-spring-cloud-microservice-provider
+  redis:  #RedisCluster配置
+    cluster:
+      max-redirects: 3
+      nodes:
+      - 172.168.63.233:6379,172.168.63.233:6380,172.168.63.233:6381,172.168.63.234:6379,172.168.63.234:6380,172.168.63.234:6381   
+  datasource:
+    druid:
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://172.168.10.7:3306/test_xiongchaoqun2
+      username: develop
+      password: develop
+
+
+eureka:
+  client:
+    register-with-eureka: true
+    healthcheck: 
+      enable: true # 对应的类名：EurekaDiscoveryClientConfiguration.class
+    serviceUrl:
+      defaultZone: http://admin:admin@peer1:3001/eureka
+  instance:
+    appname: ${spring.application.name}
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+    lease-expiration-duration-in-seconds: 30
+    lease-renewal-interval-in-seconds: 10
+  
+  
+  
