@@ -1,0 +1,11 @@
+1、新建文件夹
+2、在当前目录打开Git Bash，打开Git命令行
+3、执行命令：git init 初始化本地仓库
+4、执行命令：ssh-keygen，在最后面填写秘钥名称 XX
+5、在当前目录，会找到XX.pub
+6、记事本打开这个文件，复制内容，打开GitHub的SSH秘钥设置。
+https://github.com/settings/keys
+7、新增秘钥，将复制的内容粘贴进去即可。
+8、执行命令：ssh -T git@github.com 
+出现以下表示成功！
+Hi xiongchaoqun! You've successfully authenticated, but GitHub does not provide shell access.
