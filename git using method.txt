@@ -10,13 +10,33 @@ https://github.com/settings/keys
 出现以下表示成功！
 Hi xiongchaoqun! You've successfully authenticated, but GitHub does not provide shell access.
 
-提交修改
-1、设置账户名称和账户邮箱
+查看名称和账户邮箱
+git config user.name
+git config user.email
+
+设置账户名称和账户邮箱
 git config --global user.name "ouyangyewei"
 git config --global user.email "ouyangyewei@yhd.com"
+
 
 git add "XX.txt":将文件新增到暂存区
 git commit -m "提交描述"：将文件提交到本地仓库
 git push 
-
 git status：查看暂存区的文件
+
+
+删除本地仓库并上传
+拉取远程的Repo到本地（如果已经在本地，可以略过） 
+
+git clone xxxxxx
+在本地仓库删除文件 
+git rm 我的文件
+
+在本地仓库删除文件夹（此处-r表示递归所有子目录，如果你要删除的，是空的文件夹，此处可以不用带上-r。）
+git rm -r 我的文件夹/
+
+提交代码 
+git commit -m"我的修改"
+
+推送到远程仓库（比如GitHub） 
+git push origin xxxxxx
