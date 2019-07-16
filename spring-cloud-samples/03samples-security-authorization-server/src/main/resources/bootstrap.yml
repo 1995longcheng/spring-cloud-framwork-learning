@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: 03samples-security-authorization-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 4930f0b0-2af5-478d-8940-9418866a194f #所属命名空间
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        group: SAMPLES_GROUP # 对 shared-dataids无效
+        namespace: 4930f0b0-2af5-478d-8940-9418866a194f #所属命名空间
+        shared-dataids: 01samples-common.yaml   #只能用默认的DEFAULT_GROUP

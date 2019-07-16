@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: 02samples-gateway-nacos
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 4930f0b0-2af5-478d-8940-9418866a194f #所属命名空间
+      config:
+        server-addr: 127.0.0.1:8848
+        group: SAMPLES_GROUP #所属分组
+        namespace: 4930f0b0-2af5-478d-8940-9418866a194f  #所属命名空间
+        file-extension: yaml
