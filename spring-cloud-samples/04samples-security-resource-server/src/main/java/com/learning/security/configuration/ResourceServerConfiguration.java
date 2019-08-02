@@ -29,10 +29,10 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 	 * 不需要拦截的 路径api-security
 	 */
 	@Value("${security.basic.allowPath:/login*}")
-	String allowPath;
+	private String allowPath;
 	
 	@Value("${security.basic.filterPath:}")
-	String filterPath;
+	private String filterPath;
 
 	/**
 	 * 资源服务器相关配置
@@ -53,7 +53,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 		} else {
 			http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and().requestMatchers()
 					.anyRequest().and().anonymous().and()
-					.authorizeRequests().antMatchers(tmpAllowPath).permitAll()// 无需认证
+					.authorizeRequests().antMatchers(tmpAllowPath).permitAll()// 无需认证【没有配置的不会拦截】
 					.antMatchers(tmpFilterPath).authenticated(); // 配置访问权限控制，必须认证过后才可以访问
 
 		}
