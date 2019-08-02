@@ -1,3 +1,13 @@
+security:
+  oauth2:
+    client:
+      client-id: client1   #配置需要注意点：https://blog.csdn.net/xichenguan/article/details/77976829
+      client-secret: 123456
+    resource:
+      token-info-uri: http://03samples-security-authorization-server/oauth/check_token   # 负载均衡用法
+      prefer-token-info: true     # RemoteTokenServices
+#      user-info-uri: http://03samples-security-authorization-server/user  # UserInfoTokenServices
+
 spring:
   application:
     name: 06samples-discovery-nacos-provider-with-security
