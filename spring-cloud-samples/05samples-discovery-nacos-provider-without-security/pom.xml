@@ -11,11 +11,12 @@
 	<description>samples-discovery-nacos-provider-without-security</description>
 
 	<dependencies>
+	<!-- 
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-security</artifactId>
 		</dependency>
-
+ -->
 		<dependency>
 			<groupId>com.learning</groupId>
 			<artifactId>01samples-common</artifactId>

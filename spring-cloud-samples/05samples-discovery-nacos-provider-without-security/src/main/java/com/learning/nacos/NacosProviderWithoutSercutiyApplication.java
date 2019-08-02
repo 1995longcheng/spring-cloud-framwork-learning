@@ -2,16 +2,17 @@ package com.learning.nacos;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 
 import com.learning.nacos.configuration.FamilyConfiguration;
 
-@EnableConfigurationProperties(value = {FamilyConfiguration.class})
+@EnableConfigurationProperties(value = { FamilyConfiguration.class })
 @EnableDiscoveryClient
-@SpringBootApplication
-@ComponentScan(basePackages ="com.learning")
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@ComponentScan(basePackages = "com.learning")
 public class NacosProviderWithoutSercutiyApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(NacosProviderWithoutSercutiyApplication.class, args);
