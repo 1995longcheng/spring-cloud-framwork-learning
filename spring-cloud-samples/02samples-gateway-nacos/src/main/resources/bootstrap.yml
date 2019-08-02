@@ -1,13 +1,31 @@
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
 spring:
   application:
     name: 02samples-gateway-nacos
   cloud:
+    gateway:
+      default-filters:
+      - name: Hystrix
+        args:
+          name: fallbackcmd
+          fallbackUri: forward:/fallback
+    
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
         namespace: 4930f0b0-2af5-478d-8940-9418866a194f #所属命名空间
       config:
+        gateway-data-id: ${spring.application.name}-route.yaml #自定义属性【路由配置】
+        shared-dataids: ${spring.cloud.nacos.config.gateway-data-id}
+        refreshable-dataids: ${spring.cloud.nacos.config.gateway-data-id}
         server-addr: 127.0.0.1:8848
         group: SAMPLES_GROUP #所属分组
         namespace: 4930f0b0-2af5-478d-8940-9418866a194f  #所属命名空间
         file-extension: yaml
+

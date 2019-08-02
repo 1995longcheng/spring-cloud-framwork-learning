@@ -20,6 +20,8 @@ import springfox.documentation.swagger.web.UiConfigurationBuilder;
 /**
  * swagger-ui【内置请求URL】
  * 
+ * API端点
+ * 
  * @author xiongchaoqun
  * @date 2019年7月15日
  */
