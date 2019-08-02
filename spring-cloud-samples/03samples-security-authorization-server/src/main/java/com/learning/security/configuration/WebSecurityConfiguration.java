@@ -1,10 +1,13 @@
 package com.learning.security.configuration;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -12,6 +15,19 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @EnableWebSecurity // 开启权限验证
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+	@Value("${spring.application.name}")
+	private String applicationName;
+	
+	@Value("${spring.security.user.name}")
+	private String username;
+	
+	@Value("${spring.security.user.password}")
+	private String password;
+	
+	@Value("${spring.security.user.authorities}")
+	private String[] authorities;
+
 	/**
 	 * 配置这个bean会在做AuthorizationServerConfigurer配置的时候使用
 	 * 
@@ -34,9 +50,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected UserDetailsService userDetailsService() {
 		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-		manager.createUser(User.withUsername("admin")
-				.password(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("admin"))
-				.authorities("USER").build());
+		manager.createUser(
+				User
+				.withUsername(username)
+				.password(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(password))
+				.authorities(authorities)
+				.build());
 		return manager;
 	}
 
@@ -45,4 +64,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(userDetailsService());
 	}
 
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		// TODO Auto-generated method stub
+		//super.configure(http);  //需要关闭这个，否则以下配置均为无效
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and().requestMatchers()
+		.anyRequest()
+//		.authorizeRequests().antMatchers("/" + applicationName + "/**").permitAll()// 无需认证【没有配置的不会拦截】
+		.and().authorizeRequests().antMatchers("/" + applicationName + "/**").authenticated(); // 配置访问权限控制，必须认证过后才可以访问
+	}
 }

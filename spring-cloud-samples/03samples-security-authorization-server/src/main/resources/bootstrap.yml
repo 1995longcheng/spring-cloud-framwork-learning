@@ -1,3 +1,4 @@
+# 公共配置
 spring:
   application:
     name: 03samples-security-authorization-server
