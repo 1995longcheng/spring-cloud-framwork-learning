@@ -18,13 +18,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Value("${spring.application.name}")
 	private String applicationName;
-	
+
 	@Value("${spring.security.user.name}")
 	private String username;
-	
+
 	@Value("${spring.security.user.password}")
 	private String password;
-	
+
 	@Value("${spring.security.user.authorities}")
 	private String[] authorities;
 
@@ -50,12 +50,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected UserDetailsService userDetailsService() {
 		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-		manager.createUser(
-				User
-				.withUsername(username)
+		manager.createUser(User.withUsername(username)
 				.password(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(password))
-				.authorities(authorities)
-				.build());
+				.authorities(authorities).build());
 		return manager;
 	}
 
@@ -67,10 +64,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// TODO Auto-generated method stub
-		//super.configure(http);  //需要关闭这个，否则以下配置均为无效
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and().requestMatchers()
-		.anyRequest()
-//		.authorizeRequests().antMatchers("/" + applicationName + "/**").permitAll()// 无需认证【没有配置的不会拦截】
-		.and().authorizeRequests().antMatchers("/" + applicationName + "/**").authenticated(); // 配置访问权限控制，必须认证过后才可以访问
+		// super.configure(http); //需要关闭这个，否则以下配置均为无效
+		http.csrf().disable()//不关闭的话，post请求会直接返回403错误
+		.authorizeRequests().antMatchers("/" + applicationName + "/token/**").access("permitAll")// token相关端点无需认证【没有配置的不会拦截】 优先级高于
+		.antMatchers("/" + applicationName + "/**").authenticated(); // 配置访问权限控制，必须认证过后才可以访问
 	}
 }

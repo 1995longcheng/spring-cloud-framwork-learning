@@ -19,7 +19,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
+
+import com.learning.common.BaseController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -37,7 +38,7 @@ import io.swagger.annotations.ApiResponses;
 
 @Api("安全模块-Token管理中心")
 @RestController
-public class TokenController {
+public class TokenController extends BaseController {
 
 	@Value("${spring.application.name}")
 	private String applicationName;
@@ -53,9 +54,6 @@ public class TokenController {
 	 */
 	@Value("${security.oauth2.client.authorizedGrantTypes}")
 	private String[] authorizedGrantTypes;
-	
-	@Autowired
-	private RestTemplate restTemplate;
 
 	@Autowired
 	private AuthorizationServerEndpointsConfiguration authorizationServerEndpointsConfiguration;// 获取认证服务器端点配置
@@ -125,7 +123,7 @@ public class TokenController {
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "access_token", value = "access_token", required = true, dataType = "String", paramType = "query"), })
 	@ApiResponses({ @ApiResponse(code = 200, message = "检查通过") })
-	@RequestMapping(method = { RequestMethod.POST }, value = "/token/refreshToken")
+	@RequestMapping(method = { RequestMethod.GET,RequestMethod.POST }, value = "/token/refreshToken")
 	public Object refreshToken(HttpServletRequest request) {
 		
 		try {
@@ -155,5 +153,4 @@ public class TokenController {
 		}
 		return "token有效！";
 	}
-
 }

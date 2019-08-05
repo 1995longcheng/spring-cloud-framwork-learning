@@ -1,4 +1,8 @@
 # 公共配置
+logging:
+  level:
+    root: debug
+
 spring:
   application:
     name: 03samples-security-authorization-server

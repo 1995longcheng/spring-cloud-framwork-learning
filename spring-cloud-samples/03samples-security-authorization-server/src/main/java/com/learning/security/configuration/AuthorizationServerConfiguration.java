@@ -99,6 +99,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 clientDetailsServiceBuilder.withClient(clientIds[i].trim())
 //                .resourceIds(DEMO_RESOURCE_ID)
                         .authorizedGrantTypes(authorizedGrantTypes)
+                        .authorities(new String[] {"A","B","C"})   //授权ABC
                         .scopes(clientScope)
                         .secret(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(clientSecrets[i]));
 //						.accessTokenValiditySeconds(1200)    //token有效期
