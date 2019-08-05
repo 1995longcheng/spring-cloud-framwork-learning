@@ -1,8 +1,8 @@
 package com.learning.nacos.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.learning.common.BaseController;
@@ -20,7 +20,7 @@ public class FamilyController extends BaseController {
 	private FamilyConfiguration cfg;
 
 	@ApiOperation(value = "获取父亲对象方法")
-	@GetMapping("/family/getFather")
+	@RequestMapping(value = "/family/getFather", method = { RequestMethod.POST, RequestMethod.GET })
 	public Person getFather() {
 		return cfg.getFather();
 	}

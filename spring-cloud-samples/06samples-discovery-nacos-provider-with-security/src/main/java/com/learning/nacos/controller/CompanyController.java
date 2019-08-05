@@ -1,7 +1,7 @@
 package com.learning.nacos.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.learning.common.BaseController;
@@ -15,7 +15,7 @@ import io.swagger.annotations.ApiOperation;
 public class CompanyController extends BaseController {
 
 	@ApiOperation(value = "获取公司名称方法")
-	@GetMapping("/getName")
+	@RequestMapping(value = "/getName", method = { RequestMethod.POST, RequestMethod.GET })
 	public String getName() {
 		String companyName = "cattsoft";
 		return companyName;
