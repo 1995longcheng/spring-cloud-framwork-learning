@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.OAuth2ClientProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -15,8 +16,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 /**
  * spring-boot 已经提供了自动配置类：OAuth2AuthorizationServerConfiguration
@@ -28,10 +27,6 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
  */
 @Configuration
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
-
-	//Nacos Config 注入
-	@Value(value="${jwt.signKey}")
-	private String signKey;
 	
 	@Value(value="${security.oauth2.authorization.token-key-access}")
 	private String tokenKeyAccess;
@@ -47,6 +42,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	
 	@Autowired
 	private OAuth2ClientProperties oAuth2ClientProperties;
+	
     /**
      * 用来限制客户端的访问范围，如果为空（默认）的话，那么客户端拥有全部的访问范围
      */
@@ -59,19 +55,33 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     private String[] authorizedGrantTypes;
 
     
+/*********************************Redis Token存储方式*************************************/
+    @Autowired
+    private RedisConnectionFactory redisConnectionFactory;
     
 	@Bean
-	public TokenStore tokenStore() {
-		return new JwtTokenStore(accessTokenConverter());
+	public TokenStore redisTokenStore() {
+		return new RedisTokenStore(redisConnectionFactory);
 	}
+    
+/*********************************JWT Token存储方式*************************************/
+//	@Value(value="${jwt.signKey}")
+//	private String signKey;
+    
+//	@Bean
+//	public TokenStore jwtTokenStore() {
+//		return new JwtTokenStore(accessTokenConverter());
+//	}
+//	@Bean
+//	public JwtAccessTokenConverter accessTokenConverter() {
+//		final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+//		converter.setSigningKey(signKey);
+//		return converter;
+//	}
+/*********************************JWT Token存储方式*************************************/
 
-	@Bean
-	public JwtAccessTokenConverter accessTokenConverter() {
-		final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-		converter.setSigningKey(signKey);
-		return converter;
-	}
-//
+
+    
 //	/**
 //	 * AuthorizationServerSecurityConfigurer：用来配置令牌端点的安全约束。
 //	 */
@@ -86,7 +96,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	 */
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		
 		String clientId = oAuth2ClientProperties.getClientId();
         String clientSecret = oAuth2ClientProperties.getClientSecret();
         
@@ -97,9 +106,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
             InMemoryClientDetailsServiceBuilder clientDetailsServiceBuilder = clients.inMemory();
             for (int i=0; i<clientIds.length; i++) {
                 clientDetailsServiceBuilder.withClient(clientIds[i].trim())
-//                .resourceIds(DEMO_RESOURCE_ID)
                         .authorizedGrantTypes(authorizedGrantTypes)
-                        .authorities(new String[] {"A","B","C"})   //授权ABC
                         .scopes(clientScope)
                         .secret(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(clientSecrets[i]));
 //						.accessTokenValiditySeconds(1200)    //token有效期
@@ -114,8 +121,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		endpoints.authenticationManager(authenticationManager);// 指定认证管理器
-		endpoints.tokenStore(tokenStore());// 指定token存储位置
-		endpoints.accessTokenConverter(accessTokenConverter());// token生成方式
+		endpoints.tokenStore(redisTokenStore());// 指定token存储位置
+//		endpoints.accessTokenConverter(accessTokenConverter());// token生成方式
 		endpoints.userDetailsService(userDetailsService);
 	}
 

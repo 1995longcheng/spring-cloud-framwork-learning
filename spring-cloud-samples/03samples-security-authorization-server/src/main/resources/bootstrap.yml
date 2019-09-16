@@ -3,17 +3,32 @@ logging:
   level:
     root: debug
 
+#mybatis-plus:
+#  mapper-locations:
+#  - 
+
 spring:
+  redis:
+    password: 123456
+    host: 172.168.9.82
+    port: 6379 
+    
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://172.168.9.82:3306/oauth2_config?useSSL=false&useUnicode=true&characterEncoding=UTF-8&useCursorFetch=true&defaultFetchSize=100
+    username: root
+    password: root123
+
   application:
     name: 03samples-security-authorization-server
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
-        namespace: 4930f0b0-2af5-478d-8940-9418866a194f #所属命名空间
+        server-addr: 172.168.9.82:8848
+#        namespace: 4930f0b0-2af5-478d-8940-9418866a194f #所属命名空间
       config:
-        server-addr: 127.0.0.1:8848
+        server-addr: 172.168.9.82:8848
         file-extension: yaml
         group: SAMPLES_GROUP # 对 shared-dataids无效
-        namespace: 4930f0b0-2af5-478d-8940-9418866a194f #所属命名空间
+#        namespace: 4930f0b0-2af5-478d-8940-9418866a194f #所属命名空间
         shared-dataids: 01samples-common.yaml   #只能用默认的DEFAULT_GROUP

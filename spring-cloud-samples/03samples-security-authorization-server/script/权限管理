@@ -1,0 +1,41 @@
+DROP TABLE rt_users;
+CREATE TABLE rt_users(
+user_id BIGINT(15) PRIMARY KEY,
+user_name VARCHAR(50),
+PASSWORD VARCHAR(20),
+ENABLE INT(1)
+);
+
+DROP TABLE rt_roles;
+CREATE TABLE rt_roles(
+role_id BIGINT(15) PRIMARY KEY,
+role_name VARCHAR(50),
+ENABLE INT(1)
+);
+
+DROP TABLE rt_rights;
+CREATE TABLE rt_rights(
+right_id BIGINT(15) PRIMARY KEY,
+right_name VARCHAR(50),
+right_type VARCHAR(30),
+url VARCHAR(255),
+insert_time BIGINT(12)
+);
+
+DROP TABLE rt_user_relate_role;
+CREATE TABLE rt_user_relate_role(
+user_id BIGINT(15),
+user_name VARCHAR(50),
+role_id BIGINT(15),
+role_name VARCHAR(50),
+ENABLE INT(1)
+);
+
+DROP TABLE rt_role_relate_right;
+CREATE TABLE rt_role_relate_right(
+role_id BIGINT(15),
+role_name VARCHAR(50),
+right_id BIGINT(15),
+right_name VARCHAR(50),
+ENABLE INT(1)
+);

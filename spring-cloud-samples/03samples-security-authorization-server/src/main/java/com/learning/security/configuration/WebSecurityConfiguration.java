@@ -7,11 +7,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+import com.learning.security.configuration.userdetail.UserDetailService;
 
 @EnableWebSecurity // 开启权限验证
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -19,14 +17,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Value("${spring.application.name}")
 	private String applicationName;
 
-	@Value("${spring.security.user.name}")
-	private String username;
+//	@Value("${spring.security.user.name}")
+//	private String username;
+//
+//	@Value("${spring.security.user.password}")
+//	private String password;
 
-	@Value("${spring.security.user.password}")
-	private String password;
-
-	@Value("${spring.security.user.authorities}")
-	private String[] authorities;
+//	@Value("${spring.security.user.authorities}")
+//	private String[] authorities;
 
 	/**
 	 * 配置这个bean会在做AuthorizationServerConfigurer配置的时候使用
@@ -46,15 +44,25 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	 * 
 	 * @return
 	 */
+//	@Bean
+//	@Override
+//	protected UserDetailsService userDetailsService() {
+//		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+//		manager.createUser(User.withUsername(username)
+//				.password(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(password))
+//				.authorities(authorities).build());
+//		return manager;
+//	}
+	
+	/**
+	 * 自定义
+	 */
 	@Bean
 	@Override
 	protected UserDetailsService userDetailsService() {
-		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-		manager.createUser(User.withUsername(username)
-				.password(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(password))
-				.authorities(authorities).build());
-		return manager;
+		return new UserDetailService();
 	}
+	
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -67,6 +75,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		// super.configure(http); //需要关闭这个，否则以下配置均为无效
 		http.csrf().disable()//不关闭的话，post请求会直接返回403错误
 		.authorizeRequests().antMatchers("/" + applicationName + "/token/**").access("permitAll")// token相关端点无需认证【没有配置的不会拦截】 优先级高于
-		.antMatchers("/" + applicationName + "/**").authenticated(); // 配置访问权限控制，必须认证过后才可以访问
+		.antMatchers("/" + applicationName + "/user/**").access("permitAll")// token相关端点无需认证【没有配置的不会拦截】 优先级高于
+		.antMatchers("/" + applicationName + "/role/**").access("permitAll")// token相关端点无需认证【没有配置的不会拦截】 优先级高于
+		.antMatchers("/" + applicationName + "/right/**").access("permitAll")// token相关端点无需认证【没有配置的不会拦截】 优先级高于
+//		.antMatchers("/" + applicationName + "/**").authenticated()
+		.antMatchers("/" + applicationName + "/**").access("hasRole('ROLE_USER')"); // 配置访问权限控制，必须认证过后才可以访问
 	}
 }
