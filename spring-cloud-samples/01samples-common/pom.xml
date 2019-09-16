@@ -52,5 +52,17 @@
 			<artifactId>mybatis-plus-boot-starter</artifactId>
 			<version>3.0.1</version>
 		</dependency>
+		
+		<dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.10</version>
+        </dependency>
+		
+		<!-- redis server -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
 	</dependencies>
 </project>
