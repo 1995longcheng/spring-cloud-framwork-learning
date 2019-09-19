@@ -1,4 +1,4 @@
-package com.learning.common.configuration;
+package com.learning.common;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +19,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration
 @EnableSwagger2
-public class Swagger2Configuration {
+public class Swagger2Api {
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -32,7 +32,7 @@ public class Swagger2Configuration {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Swagger API")
-                .description("test")
+                .description("微服务API管理中心")
                 .termsOfServiceUrl("")
                 .version("2.0")
                 .build();

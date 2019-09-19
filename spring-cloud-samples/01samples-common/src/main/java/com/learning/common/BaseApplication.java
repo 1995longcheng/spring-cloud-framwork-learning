@@ -1,8 +1,7 @@
-package com.learning.common.configuration;
+package com.learning.common;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
@@ -13,9 +12,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Configuration
-public class BaseConfiguration {
-
+public class BaseApplication {
 	/**
 	 * 声明共用HTTP请求客户端模板
 	 * 
@@ -51,5 +48,4 @@ public class BaseConfiguration {
 		template.afterPropertiesSet();
 		return template;
 	}
-	
 }
