@@ -19,6 +19,7 @@ import springfox.documentation.swagger.web.UiConfigurationBuilder;
 
 /**
  * swagger-ui【内置请求URL】
+ * 	swagger-ui.html中的js会调用这个端点获取数据
  * 
  * API端点
  * 

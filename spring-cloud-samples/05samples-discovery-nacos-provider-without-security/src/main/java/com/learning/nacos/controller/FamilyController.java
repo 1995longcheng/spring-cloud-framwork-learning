@@ -24,4 +24,8 @@ public class FamilyController extends BaseController {
 	public Person getFather() {
 		return cfg.getFather();
 	}
+	
+	
+	
+	
 }

@@ -16,6 +16,10 @@ Gateway整合Swagger-API原理
 2、通过自定义Swagger-Controller，重写相关服务端点【可看源码】，实现所有API集成功能。
 3、在网关的swagger-ui界面调用服务API时，是先将请求发送给网关，再由网关决定是否转发。【注意：请求path由各个服务的controller决定，这里需要考虑该请求path是否能够被网关转发】
 
+
+注： gateway是无法生成自身的api，由于声明api需要用到spring-mvc
+
+
 【2019-08-05】
 Gateway+OAuth2实现不同用户对不同接口的权限控制
 1、网关接入所有请求；

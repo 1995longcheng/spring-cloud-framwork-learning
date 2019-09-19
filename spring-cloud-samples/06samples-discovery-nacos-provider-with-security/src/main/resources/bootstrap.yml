@@ -1,24 +1,14 @@
-security:
-  oauth2:
-    client:
-      client-id: client1   #配置需要注意点：https://blog.csdn.net/xichenguan/article/details/77976829
-      client-secret: 123456
-    resource:
-      token-info-uri: http://03samples-security-authorization-server/oauth/check_token   # 负载均衡用法
-      prefer-token-info: true     # RemoteTokenServices
-#      user-info-uri: http://03samples-security-authorization-server/user  # UserInfoTokenServices
-
 spring:
   application:
     name: 06samples-discovery-nacos-provider-with-security
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
-        namespace: 4930f0b0-2af5-478d-8940-9418866a194f #所属命名空间
+        server-addr: 172.168.9.82:8848
+#        namespace: 4930f0b0-2af5-478d-8940-9418866a194f #所属命名空间
       config:
-        server-addr: 127.0.0.1:8848
+        server-addr: 172.168.9.82:8848
         file-extension: yaml
         group: SAMPLES_GROUP # 对 shared-dataids无效
-        namespace: 4930f0b0-2af5-478d-8940-9418866a194f #所属命名空间
+#        namespace: 4930f0b0-2af5-478d-8940-9418866a194f #所属命名空间
         shared-dataids: 01samples-common.yaml   #只能用默认的DEFAULT_GROUP

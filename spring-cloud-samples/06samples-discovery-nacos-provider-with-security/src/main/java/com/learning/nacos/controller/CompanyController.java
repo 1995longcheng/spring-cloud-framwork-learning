@@ -11,11 +11,10 @@ import io.swagger.annotations.ApiOperation;
 
 @Api("公司操作接口")
 @RestController
-@RequestMapping("/company")
 public class CompanyController extends BaseController {
 
 	@ApiOperation(value = "获取公司名称方法")
-	@RequestMapping(value = "/getName", method = { RequestMethod.POST, RequestMethod.GET })
+	@RequestMapping(value = "/company/getName", method = { RequestMethod.POST, RequestMethod.GET })
 	public String getName() {
 		String companyName = "cattsoft";
 		return companyName;

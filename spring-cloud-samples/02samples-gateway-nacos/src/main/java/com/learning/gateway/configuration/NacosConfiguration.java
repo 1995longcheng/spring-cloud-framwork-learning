@@ -1,8 +1,5 @@
 package com.learning.gateway.configuration;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.alibaba.nacos.NacosConfigProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**

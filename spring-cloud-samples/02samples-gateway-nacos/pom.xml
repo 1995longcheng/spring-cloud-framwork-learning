@@ -16,7 +16,7 @@
 			<artifactId>01samples-common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<exclusions>
-				<!-- 因为网关使用的是spring-webflux 而不是spring-mvc -->
+				<!-- 与spring webflux 有冲突，因此无法依赖sample-common项目 -->				
 				<exclusion>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-starter-web</artifactId>

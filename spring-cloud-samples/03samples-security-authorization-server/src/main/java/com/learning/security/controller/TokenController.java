@@ -2,6 +2,7 @@ package com.learning.security.controller;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -121,14 +122,14 @@ public class TokenController extends BaseController {
 	@RequestMapping(method = { RequestMethod.GET,RequestMethod.POST }, value = "/token/getUser")
 	public Object getUser(HttpServletRequest request) {
 		String accessToken = request.getParameter("access_token");
-		LinkedMultiValueMap<String, Object> response = new LinkedMultiValueMap<String, Object>();
+		HashMap<String, Object> response = new LinkedHashMap<String, Object>();
 		ResourceServerTokenServices resourceServerTokenServices = authorizationServerEndpointsConfiguration.getEndpointsConfigurer().getResourceServerTokenServices();
 		try {
 			OAuth2Authentication auth2Authentication = resourceServerTokenServices.loadAuthentication(accessToken);
 			OAuth2Request oAuth2Request = auth2Authentication.getOAuth2Request();//获取OAuth2请求【获取token时请求参数】
 			String username = oAuth2Request.getRequestParameters().get("username");
-			response.set("access_token", accessToken);
-			response.set("username", username);
+			response.put("access_token", accessToken);
+			response.put("username", username);
 		} catch (Exception e) {
 			return ResponseData.fail(e.getMessage());
 		}

@@ -27,9 +27,7 @@ import reactor.core.publisher.Mono;
 public class RequestPathStripPrefixFilter implements GlobalFilter, Ordered {
 	private static final Logger LOG = LoggerFactory.getLogger(RequestPathStripPrefixFilter.class);
 	public static final int SWAGGER_RESOURCE_FILTER_ORDER = 10101;// 在负载均衡过滤器【10100】后运行
-	
-//	public static final String TOKEN = "token";
-	
+		
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		URI url = exchange.getAttribute(GATEWAY_REQUEST_URL_ATTR);
@@ -39,12 +37,7 @@ public class RequestPathStripPrefixFilter implements GlobalFilter, Ordered {
 			// 如果是获取swagger-api请求或者是token相关请求，则去掉第一个请求路径
 			if (req_path.endsWith(Swagger2Provider.API_URI)) {
 				new_url = new URI(url.getScheme() + "://" + url.getAuthority() + Swagger2Provider.API_URI);//scheme=http authority=ip:端口
-			}
-//			else if(req_path.contains(TOKEN)) {
-//				int index = req_path.indexOf("/", 1);//从1开始，过滤第一个/
-//				new_url = new URI(url.getScheme() + "://" + url.getAuthority() + req_path.substring(index, req_path.length()));
-//			} 
-			else {
+			} else {
 				return chain.filter(exchange);
 			}
 		} catch (Exception e) {
@@ -60,5 +53,4 @@ public class RequestPathStripPrefixFilter implements GlobalFilter, Ordered {
 		// TODO Auto-generated method stub
 		return SWAGGER_RESOURCE_FILTER_ORDER;
 	}
-
 }

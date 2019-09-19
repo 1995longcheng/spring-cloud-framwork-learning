@@ -24,7 +24,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
 	@Autowired
 	private RemoteTokenServices remoteTokenServices;
-
+		
 	/**
 	 * 不需要拦截的 路径api-security
 	 */

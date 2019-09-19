@@ -74,7 +74,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		// TODO Auto-generated method stub
 		// super.configure(http); //需要关闭这个，否则以下配置均为无效
 		http.csrf().disable()//不关闭的话，post请求会直接返回403错误
-		.authorizeRequests().antMatchers("/" + applicationName + "/token/**").access("permitAll")// token相关端点无需认证【没有配置的不会拦截】 优先级高于
+		.authorizeRequests()
+		.antMatchers("/" + applicationName + "/token/**").access("permitAll")// token相关端点无需认证【没有配置的不会拦截】 优先级高于
 		.antMatchers("/" + applicationName + "/user/**").access("permitAll")// token相关端点无需认证【没有配置的不会拦截】 优先级高于
 		.antMatchers("/" + applicationName + "/role/**").access("permitAll")// token相关端点无需认证【没有配置的不会拦截】 优先级高于
 		.antMatchers("/" + applicationName + "/right/**").access("permitAll")// token相关端点无需认证【没有配置的不会拦截】 优先级高于

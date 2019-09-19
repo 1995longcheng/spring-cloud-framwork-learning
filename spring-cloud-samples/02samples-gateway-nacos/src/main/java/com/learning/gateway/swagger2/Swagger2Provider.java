@@ -21,10 +21,10 @@ import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 @Component
 @Primary
 public class Swagger2Provider implements SwaggerResourcesProvider {
-	public static final String API_URI = "/v2/api-docs";
+	public static final String API_URI = "/v2/api-docs"; // swagger-api端点【jar包内置端点/依赖了swagger-api】【收集使用swagger相关注解的信息】
 	
 	@Autowired
-    private RouteDefinitionLocator routeDefinitionLocator;//获取配置
+    private RouteDefinitionLocator routeDefinitionLocator;//网关路由配置
  
     @Override
     public List<SwaggerResource> get() {
